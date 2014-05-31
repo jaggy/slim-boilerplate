@@ -1,3 +1,6 @@
+# 0.1.3
+- Fix Controller namespace issue
+
 # 0.1.2
 - Lower case the classes
 

@@ -9,7 +9,7 @@ use Slim\Slim;
  * @package    Controller
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.2
+ * @version    Release: 0.1.3
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -49,7 +49,9 @@ class Controller
     {
         $this->slim = $slim;
 
-        $this->name = str_replace('Controller', '', get_called_class());
+        $namespace  = explode('\\', get_called_class());
+        $class      = end($namespace);
+        $this->name = str_replace('Controller', '', $class);
     }
 
     /**

@@ -2,10 +2,13 @@
 
 require_once dirname(__DIR__) . '/config/bootstrap.php';
 
-$slim = require APP_ROOT . DS . 'config' . DS . 'slim.php';
+use Router\Router;
 
-$slim->get('/', function() use ($slim) {
-    $slim->render('site/index.twig');
-});
+$slim   = require APP_ROOT . DS . 'config' . DS . 'slim.php';
+$router = new Router($slim);
+
+$router->get('/', [
+    'uses' => 'Site@home'
+]);
 
 $slim->run();

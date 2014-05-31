@@ -9,7 +9,7 @@ use Slim\Slim;
  * @package    Controller
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.1
+ * @version    Release: 0.1.2
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -62,6 +62,11 @@ class Controller
      */
     public function __call($name, $arguments = [])
     {
+
+        if (!method_exists($this, $name)) {
+            throw new \Exception("Action `{$name}` does not exist.");
+        }
+
         call_user_func_array([$this, $name], $arguments);
 
         if (!$this->render) {

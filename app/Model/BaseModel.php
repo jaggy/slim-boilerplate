@@ -80,10 +80,18 @@ class BaseModel extends Model
     /**
      * Override the save function to add validation and prefill data
      *
+     * @access public
      * @return boolean
      */
     public function save()
     {
+        $validation = $this->validate();
+
+        // validation fails
+        if (is_array($validation)) {
+            return $validation;
+        }
+
         $this->set_expr('created', 'NOW()');
         $this->set_expr('updated', 'NOW()');
 

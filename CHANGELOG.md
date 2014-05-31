@@ -1,3 +1,7 @@
+# 0.1.4
+- Fix view tests
+- Add Gruntjs
+
 # 0.1.3
 - Fix Controller namespace issue
 

@@ -48,3 +48,4 @@ Session.vim
 
 ### Project Specific Ignores ###
 phinx.yml
+database.php

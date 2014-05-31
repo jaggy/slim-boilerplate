@@ -2,12 +2,10 @@
 
 require_once dirname(__DIR__) . '/config/bootstrap.php';
 
-use Slim\Slim;
+$slim = require '../config/slim.php';
 
-$app = new Slim;
-
-$app->get('/', function() {
+$slim->get('/', function() {
     echo 'Hello World!';
 });
 
-$app->run();
+$slim->run();

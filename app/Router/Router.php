@@ -9,7 +9,7 @@ use Slim\Slim;
  * @package    Router
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.2
+ * @version    Release: 0.1.3
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -67,7 +67,7 @@ class Router
         $controller = self::CONTROLLER . "{$name}Controller";
         $reflection = new \ReflectionClass($controller);
 
-        $instance = $reflection->newInstance();
+        $instance = $reflection->newInstance($this->slim);
 
         $callback = [$instance, $action];
         call_user_func_array([$this->slim, $method], [$url, $callback]);

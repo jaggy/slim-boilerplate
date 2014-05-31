@@ -9,7 +9,7 @@ use Slim\Slim;
  * @package    Controller
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.0
+ * @version    Release: 0.1.1
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -52,6 +52,14 @@ class Controller
         $this->name = str_replace('Controller', '', get_called_class());
     }
 
+    /**
+     * Detect and render the view
+     *
+     * @access public
+     * @param  string $name
+     * @param  array $arguments
+     * @return void
+     */
     public function __call($name, $arguments = [])
     {
         call_user_func_array([$this, $name], $arguments);

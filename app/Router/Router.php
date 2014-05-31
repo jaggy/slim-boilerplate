@@ -9,7 +9,7 @@ use Slim\Slim;
  * @package    Router
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.3
+ * @version    Release: 0.1.4
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -57,12 +57,12 @@ class Router
      * @access protected
      * @param  string $method
      * @param  string $url
-     * @param  array  $options
+     * @param  string $reference
      * @return void
      */
-    protected function dispatch($method, $url, $options = [])
+    protected function dispatch($method, $url, $reference)
     {
-        list($name, $action) = explode('@', $options['uses']);
+        list($name, $action) = explode('@', $reference);
 
         $controller = self::CONTROLLER . "{$name}Controller";
         $reflection = new \ReflectionClass($controller);
@@ -89,8 +89,8 @@ class Router
             throw new \Exception("Method '{$name}' does not exist.");
         }
 
-        list($url, $options) = $arguments;
+        list($url, $reference) = $arguments;
 
-        return call_user_func_array([$this, 'dispatch'], [$name, $url, $options]);
+        return call_user_func_array([$this, 'dispatch'], [$name, $url, $reference]);
     }
 }

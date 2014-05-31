@@ -7,8 +7,6 @@ use Router\Router;
 $slim   = require APP_ROOT . DS . 'config' . DS . 'slim.php';
 $router = new Router($slim);
 
-$router->get('/', [
-    'uses' => 'Site@home'
-]);
+$router->get('/', 'Site@home');
 
 $slim->run();

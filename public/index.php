@@ -2,10 +2,10 @@
 
 require_once dirname(__DIR__) . '/config/bootstrap.php';
 
-$slim = require '../config/slim.php';
+$slim = require APP_ROOT . DS . 'config' . DS . 'slim.php';
 
-$slim->get('/', function() {
-    echo 'Hello World!';
+$slim->get('/', function() use ($slim) {
+    $slim->render('site/index.twig');
 });
 
 $slim->run();

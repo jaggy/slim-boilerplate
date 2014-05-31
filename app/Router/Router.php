@@ -2,12 +2,14 @@
 
 namespace House\Router;
 
+use Slim\Slim;
+
 /**
  *
  * @package    House\Router
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.0
+ * @version    Release: 0.1.1
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -42,7 +44,7 @@ class Router
      * @access protected
      * @param  \Slim\Slim $slim
      */
-    public function __construct(\Slim\Slim $slim)
+    public function __construct(Slim $slim)
     {
         $this->slim = $slim;
     }

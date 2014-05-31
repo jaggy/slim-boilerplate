@@ -1,12 +1,12 @@
 <?php
-namespace Test;
+namespace House\Test;
 
 /**
  *
  * @package    Model
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.1
+ * @version    Release: 0.1.2
  * @link       http://github.com/jaggyspaghetti/slim-framework
  * @since      Class available since Release 0.1.3
  */
@@ -37,15 +37,6 @@ class View extends \PHPUnit_Extensions_Selenium2TestCase
      */
     protected $url  = 'http://dev:1234/';
 
-    /**
-     * Screenshot directory
-     *
-     * @access protected
-     * @var    string
-     */
-    protected $screenshots;
-
-
 
     /**
      * Capture a screenshot
@@ -56,9 +47,9 @@ class View extends \PHPUnit_Extensions_Selenium2TestCase
     protected function capture()
     {
         $now = strtotime(date('Ymd His'));
-        $destination = $this->screenshots . DS . "{$now}.png";
+        $destination = APP_ROOT . DS . 'screenshots' . DS . "{$now}.png";
 
-        echo "Screenshot: {$destination}\n";
+        echo "\nScreenshot: {$destination}\n";
         file_put_contents($destination, $this->currentScreenshot());
     }
 
@@ -69,9 +60,10 @@ class View extends \PHPUnit_Extensions_Selenium2TestCase
      * @access protected
      * @return void
      */
-    protected function onNotSuccessfulTest()
+    public function onNotSuccessfulTest(\Exception $e)
     {
         $this->capture();
+        throw $e;
     }
 
 
@@ -89,8 +81,6 @@ class View extends \PHPUnit_Extensions_Selenium2TestCase
      */
     public function setUp()
     {
-        $this->screenshots = APP_ROOT . DS . 'screenshots';
-
         $this->setHost($this->host);
         $this->setPort($this->port);
 

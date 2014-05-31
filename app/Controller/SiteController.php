@@ -11,11 +11,10 @@ namespace Controller;
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
-class SiteController
+class SiteController extends Controller
 {
 
-    public function home()
+    protected function home()
     {
-        echo 'Home';
     }
 }

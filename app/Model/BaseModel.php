@@ -9,7 +9,7 @@ use Valitron\Validator;
  * @package    Model
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.1
+ * @version    Release: 0.1.2
  * @link       http://github.com/jaggyspaghetti/slim-framework
  * @since      Class available since Release 0.1.0
  */
@@ -32,6 +32,12 @@ class BaseModel extends Model
      * @var    array
      */
     protected $validation = [];
+
+/*
+|--------------------------------------------------------------------------
+| Validation
+|--------------------------------------------------------------------------
+*/
 
     /**
      * Get the object attributes as an array for valdiation
@@ -77,6 +83,53 @@ class BaseModel extends Model
     }
 
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Hooks
+|--------------------------------------------------------------------------
+*/
+
+
+    /**
+     * Before save: defaults to populating the timestamps
+     *
+     * @access protected
+     * @return boolean
+     */
+    protected function beforeSave()
+    {
+        $this->set_expr('created', 'NOW()');
+        $this->set_expr('updated', 'NOW()');
+    }
+
+    /**
+     * @access protected
+     * @return boolean
+     */
+    protected function afterSave()
+    {
+    }
+
+    /**
+     * @access protected
+     * @return boolean
+     */
+    protected function beforeValidate()
+    {
+    }
+
+
+    /**
+     * @access protected
+     * @return boolean
+     */
+    protected function afterValidate()
+    {
+    }
+
+
     /**
      * Override the save function to add validation and prefill data
      *
@@ -85,17 +138,30 @@ class BaseModel extends Model
      */
     public function save()
     {
+        // before validate hook
+        $this->beforeValidate();
+
         $validation = $this->validate();
+
+        // after validate hook
+        $this->afterValidate();
 
         // validation fails
         if (is_array($validation)) {
             return $validation;
         }
 
-        $this->set_expr('created', 'NOW()');
-        $this->set_expr('updated', 'NOW()');
+        // before save hook
+        $this->beforeSave();
 
-        return parent::save();
+        $response = parent::save();
+
+        // after save hook
+        $this->afterSave();
+
+        return $response;
     }
+
+
 
 }

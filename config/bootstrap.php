@@ -18,3 +18,4 @@ define('WEBROOT', APP_ROOT . DS . 'public');
 
 require_once APP_ROOT . DS . 'vendor' . DS . 'autoload.php';
 require_once 'core.php';
+require_once 'database.php';

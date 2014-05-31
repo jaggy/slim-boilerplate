@@ -1,15 +1,15 @@
 <?php
 
-namespace House\Router;
+namespace Router;
 
 use Slim\Slim;
 
 /**
  *
- * @package    House\Router
+ * @package    Router
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.1
+ * @version    Release: 0.1.2
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */

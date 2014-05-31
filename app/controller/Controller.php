@@ -49,7 +49,9 @@ class Controller
     {
         $this->slim = $slim;
 
-        $this->name = str_replace('Controller', '', get_called_class());
+        $namespace  = explode('\\', get_called_class());
+        $class      = end($namespace);
+        $this->name = str_replace('Controller', '', $class);
     }
 
     /**

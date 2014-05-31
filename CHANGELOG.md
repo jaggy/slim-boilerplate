@@ -1,3 +1,6 @@
+# 0.1.2
+- Lower case the classes
+
 # 0.1.1
 - Idiorm and Paris Model
 - Validation using Valitron

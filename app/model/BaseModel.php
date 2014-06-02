@@ -102,6 +102,8 @@ class BaseModel extends Model
     {
         $this->set_expr('created', 'NOW()');
         $this->set_expr('updated', 'NOW()');
+
+        return true;
     }
 
     /**
@@ -110,6 +112,7 @@ class BaseModel extends Model
      */
     protected function afterSave()
     {
+        return true;
     }
 
     /**
@@ -118,6 +121,7 @@ class BaseModel extends Model
      */
     protected function beforeValidate()
     {
+        return true;
     }
 
 
@@ -127,6 +131,7 @@ class BaseModel extends Model
      */
     protected function afterValidate()
     {
+        return true;
     }
 
 
@@ -139,12 +144,16 @@ class BaseModel extends Model
     public function save()
     {
         // before validate hook
-        $this->beforeValidate();
+        if (!$this->beforeValidate()) {
+            return false;
+        }
 
         $validation = $this->validate();
 
         // after validate hook
-        $this->afterValidate();
+        if (!$this->afterValidate()) {
+            return false;
+        }
 
         // validation fails
         if (is_array($validation)) {
@@ -152,12 +161,16 @@ class BaseModel extends Model
         }
 
         // before save hook
-        $this->beforeSave();
+        if (!$this->beforeSave()) {
+            return false;
+        }
 
         $response = parent::save();
 
         // after save hook
-        $this->afterSave();
+        if (!$this->afterSave()) {
+            return false;
+        }
 
         return $response;
     }

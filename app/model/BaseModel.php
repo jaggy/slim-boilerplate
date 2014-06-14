@@ -17,6 +17,14 @@ class BaseModel extends Model
 {
 
     /**
+     * Error object
+     *
+     * @var    array
+     * @access public
+     */
+    public $errors;
+
+    /**
      * Valitron Object
      *
      * @access protected
@@ -39,6 +47,7 @@ class BaseModel extends Model
 |--------------------------------------------------------------------------
 */
 
+    /* protected getData() {{{ */
     /**
      * Get the object attributes as an array for valdiation
      *
@@ -57,9 +66,11 @@ class BaseModel extends Model
 
         return $data;
     }
+    /* }}} */
 
+    /* protected validate() {{{ */
     /**
-     * Validate the model
+     * Validate the data
      *
      * @access protected
      * @return boolean
@@ -76,11 +87,13 @@ class BaseModel extends Model
         }
 
         if (!$this->validator->validate()) {
-            return $this->validator->errors();
+            $this->errors = $this->validator->errors();
+            return false;
         }
 
         return true;
     }
+    /* }}} */
 
 
 

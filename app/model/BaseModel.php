@@ -9,12 +9,20 @@ use Valitron\Validator;
  * @package    Model
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.2
+ * @version    Release: 0.1.3
  * @link       http://github.com/jaggyspaghetti/slim-framework
  * @since      Class available since Release 0.1.0
  */
 class BaseModel extends Model
 {
+
+    /**
+     * Error object
+     *
+     * @var    array
+     * @access public
+     */
+    public $errors;
 
     /**
      * Valitron Object
@@ -39,6 +47,7 @@ class BaseModel extends Model
 |--------------------------------------------------------------------------
 */
 
+    /* protected getData() {{{ */
     /**
      * Get the object attributes as an array for valdiation
      *
@@ -57,9 +66,11 @@ class BaseModel extends Model
 
         return $data;
     }
+    /* }}} */
 
+    /* protected validate() {{{ */
     /**
-     * Validate the model
+     * Validate the data
      *
      * @access protected
      * @return boolean
@@ -76,11 +87,13 @@ class BaseModel extends Model
         }
 
         if (!$this->validator->validate()) {
-            return $this->validator->errors();
+            $this->errors = $this->validator->errors();
+            return false;
         }
 
         return true;
     }
+    /* }}} */
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Test;
+namespace Test\Model;
 
 /**
  *
@@ -20,15 +20,4 @@ class ModelTestCase extends \PHPUnit_Framework_TestCase
 |--------------------------------------------------------------------------
 */
 
-    /**
-     * Assert that the model has the error message given
-     *
-     * @access protected
-     * @param  array  $array
-     * @param  string $value
-     * @return void
-     */
-    protected function assertArrayContains($array, $value){
-        $this->assertTrue(in_array($value, $array));
-    }
 }

@@ -9,7 +9,7 @@ use Valitron\Validator;
  * @package    Model
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.3
+ * @version    Release: 0.1.4
  * @link       http://github.com/jaggyspaghetti/slim-framework
  * @since      Class available since Release 0.1.0
  */
@@ -17,9 +17,9 @@ class BaseModel extends Model
 {
 
     /**
-     * Error object
+     * Error Object
      *
-     * @var    array
+     * @var mixed
      * @access public
      */
     public $errors;
@@ -41,13 +41,20 @@ class BaseModel extends Model
      */
     protected $validation = [];
 
+    /**
+     * Association object
+     * 
+     * @access protected
+     * @var    array
+     */
+    protected $_associations;
+
 /*
 |--------------------------------------------------------------------------
 | Validation
 |--------------------------------------------------------------------------
 */
 
-    /* protected getData() {{{ */
     /**
      * Get the object attributes as an array for valdiation
      *
@@ -66,16 +73,14 @@ class BaseModel extends Model
 
         return $data;
     }
-    /* }}} */
 
-    /* protected validate() {{{ */
     /**
-     * Validate the data
+     * Validate the model
      *
-     * @access protected
+     * @access public
      * @return boolean
      */
-    protected function validate()
+    public function validate()
     {
         $data = $this->getData();
         $this->validator = new Validator($data);
@@ -93,7 +98,6 @@ class BaseModel extends Model
 
         return true;
     }
-    /* }}} */
 
 
 
@@ -189,5 +193,78 @@ class BaseModel extends Model
     }
 
 
+    /* public associations() {{{ */
+    /**
+     * Get the assocition list
+     *
+     * @access public
+     * @return void
+     */
+    public function associations()
+    {
+        return $this->_associations;
+    }
+    /* }}} */
 
+
+    /* protected fetchAssociation($name) {{{ */
+    /**
+     * Detect the association and return a dynamic callback
+     *
+     * @param mixed $name
+     * @access protected
+     * @return void
+     */
+    protected function fetchAssociation($name)
+    {
+        $check = false;
+
+        foreach ($this->_associations as $association => $relations) {
+            foreach ($relations as $function => $model) {
+                if ($name === $function) {
+                    $check = true;
+                    break;
+                }
+            }
+        }
+
+        // just cancel when nothing is found
+        if (!$check) return false;
+
+        // $this->hasMany();
+        // $this->belongsTo();
+        return function () use ($association, $model) {
+            return call_user_func_array([$this, $association], [$model]);
+        };
+    }
+    /* }}} */
+
+
+
+    /* public __call($name, $arguments = []) {{{ */
+    /**
+     *  Add a check for dynamic associations so we can test the models
+     *
+     * @param mixed $name
+     * @param mixed $arguments
+     * @access public
+     * @return void
+     */
+    public function __call($name, $arguments = [])
+    {
+        $method = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $name));
+
+        if (method_exists($this, $method)) {
+            return call_user_func_array(array($this, $method), $arguments);
+        }
+
+        $callback = $this->fetchAssociation($name);
+
+        if ($callback) {
+            return call_user_func($callback);
+        }
+
+        throw new \ParisMethodMissingException("Method $name() does not exist in class " . get_class($this));
+    }
+    /* }}} */
 }

@@ -1,3 +1,12 @@
+# 0.2.0
+- Add Pimple Dependency Injection Container
+- Add a Session Adapter
+- Fix namespaces conflict with Linux routes
+- Fix BaseModel docblocks
+- Add blueprint handlers
+- Change file structire
+- Change ViewTests from PHPUnit Selenium Extension to Facebook Web Driver
+
 # 0.1.4
 - Fix view tests
 - Add Gruntjs

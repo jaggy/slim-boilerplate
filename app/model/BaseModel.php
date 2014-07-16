@@ -1,5 +1,5 @@
 <?php
-namespace Model;
+namespace model;
 
 use Model;
 use Valitron\Validator;
@@ -9,7 +9,7 @@ use Valitron\Validator;
  * @package    Model
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.4
+ * @version    Release: 0.2.0
  * @link       http://github.com/jaggyspaghetti/slim-framework
  * @since      Class available since Release 0.1.0
  */
@@ -32,7 +32,6 @@ class BaseModel extends Model
      */
     protected $validator;
 
-
     /**
      * Validation set
      *
@@ -43,7 +42,7 @@ class BaseModel extends Model
 
     /**
      * Association object
-     * 
+     *
      * @access protected
      * @var    array
      */
@@ -54,12 +53,12 @@ class BaseModel extends Model
 | Validation
 |--------------------------------------------------------------------------
 */
-
+    /* protected getData() {{{ */
     /**
      * Get the object attributes as an array for valdiation
      *
      * @access protected
-     * @return array
+     * @return void
      */
     protected function getData()
     {
@@ -73,12 +72,14 @@ class BaseModel extends Model
 
         return $data;
     }
+    /* }}} */
 
+    /* public validate() {{{ */
     /**
      * Validate the model
      *
      * @access public
-     * @return boolean
+     * @return void
      */
     public function validate()
     {
@@ -98,6 +99,8 @@ class BaseModel extends Model
 
         return true;
     }
+    /* }}} */
+
 
 
 
@@ -107,13 +110,12 @@ class BaseModel extends Model
 | Hooks
 |--------------------------------------------------------------------------
 */
-
-
+    /* protected beforeSave() {{{ */
     /**
      * Before save: defaults to populating the timestamps
      *
      * @access protected
-     * @return boolean
+     * @return void
      */
     protected function beforeSave()
     {
@@ -122,41 +124,57 @@ class BaseModel extends Model
 
         return true;
     }
+    /* }}} */
 
+
+    /* protected afterSave() {{{ */
     /**
+     * afterSave
+     *
      * @access protected
-     * @return boolean
+     * @return void
      */
     protected function afterSave()
     {
         return true;
     }
+    /* }}} */
 
+
+    /* protected beforeValidate() {{{ */
     /**
+     * beforeValidate
+     *
      * @access protected
-     * @return boolean
+     * @return void
      */
     protected function beforeValidate()
     {
         return true;
     }
+    /* }}} */
 
 
+    /* protected afterValidate() {{{ */
     /**
+     * afterValidate
+     *
      * @access protected
-     * @return boolean
+     * @return void
      */
     protected function afterValidate()
     {
         return true;
     }
+    /* }}} */
 
 
+    /* public save() {{{ */
     /**
      * Override the save function to add validation and prefill data
      *
      * @access public
-     * @return boolean
+     * @return void
      */
     public function save()
     {
@@ -191,6 +209,7 @@ class BaseModel extends Model
 
         return $response;
     }
+    /* }}} */
 
 
     /* public associations() {{{ */
@@ -229,7 +248,9 @@ class BaseModel extends Model
         }
 
         // just cancel when nothing is found
-        if (!$check) return false;
+        if (!$check) {
+            return false;
+        }
 
         // $this->hasMany();
         // $this->belongsTo();

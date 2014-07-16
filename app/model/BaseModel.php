@@ -1,7 +1,6 @@
 <?php
-namespace Model;
+namespace model;
 
-use Model;
 use Valitron\Validator;
 
 /**
@@ -13,13 +12,13 @@ use Valitron\Validator;
  * @link       http://github.com/jaggyspaghetti/slim-framework
  * @since      Class available since Release 0.1.0
  */
-class BaseModel extends Model
+class BaseModel extends \Model
 {
 
     /**
      * Error Object
      *
-     * @var mixed
+     * @var    array
      * @access public
      */
     public $errors;
@@ -27,34 +26,33 @@ class BaseModel extends Model
     /**
      * Valitron Object
      *
-     * @access protected
      * @var    Valitron\Validator
+     * @access protected
      */
     protected $validator;
-
 
     /**
      * Validation set
      *
-     * @access protected
      * @var    array
+     * @access protected
      */
     protected $validation = [];
 
     /**
      * Association object
-     * 
-     * @access protected
+     *
      * @var    array
+     * @access protected
      */
     protected $_associations;
+
 
 /*
 |--------------------------------------------------------------------------
 | Validation
 |--------------------------------------------------------------------------
 */
-
     /**
      * Get the object attributes as an array for valdiation
      *

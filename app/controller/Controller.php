@@ -9,7 +9,7 @@ use Slim\Slim;
  * @package    Controller
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.3
+ * @version    Release: 0.1.4
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -39,11 +39,14 @@ class Controller
      */
     protected $name;
 
+
+    /* public __construct(Slim $slim) {{{ */
     /**
      * Initialize the controller
      *
+     * @param Slim $slim
      * @access public
-     * @param  Slim\Slim $slim
+     * @return void
      */
     public function __construct(Slim $slim)
     {
@@ -53,13 +56,16 @@ class Controller
         $class      = end($namespace);
         $this->name = str_replace('Controller', '', $class);
     }
+    /* }}} */
 
+
+    /* public __call($name, $arguments = []) {{{ */
     /**
      * Detect and render the view
      *
+     * @param mixed $name
+     * @param mixed $arguments
      * @access public
-     * @param  string $name
-     * @param  array $arguments
      * @return void
      */
     public function __call($name, $arguments = [])
@@ -76,4 +82,5 @@ class Controller
             $this->slim->render($view);
         }
     }
+    /* }}} */
 }

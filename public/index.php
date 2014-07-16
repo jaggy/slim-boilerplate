@@ -1,12 +1,34 @@
 <?php
+session_start();
 
-require_once dirname(__DIR__) . '/config/bootstrap.php';
+require_once dirname(__DIR__) . '/app/config/bootstrap.php';
 
-use Router\Router;
+$slim      = require APP_ROOT . '/app/config/slim.php';
+$container = require APP_ROOT . '/app/config/dependencies.php';
+$session   = new lib\utility\Session;
 
-$slim   = require APP_ROOT . DS . 'config' . DS . 'slim.php';
-$router = new Router($slim);
 
+/*
+|--------------------------------------------------------------------------
+| Routing Setup
+|--------------------------------------------------------------------------
+*/
+$router = new router\Router($slim);
+$router->setContainer($container);
+$router->setSession($session);
+
+
+/*
+|--------------------------------------------------------------------------
+| ROUTES
+|--------------------------------------------------------------------------
+*/
 $router->get('/', 'Site@home');
 
-$slim->run();
+
+/*
+|--------------------------------------------------------------------------
+| Application
+|--------------------------------------------------------------------------
+*/
+$slim->run(); // run the application

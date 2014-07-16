@@ -4,11 +4,14 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     shell: {
-      runTest: {
-        command: 'phpunit'
+      phpunit: {
+        command: 'phpunit --testsuite="Application Suite"'
       },
       clear: {
         command: 'clear'
+      },
+      phpcs: {
+        command: 'phpcs --standard=PSR2 --ignore=./app/config/bootstrap.php  ./app'
       }
     },
 
@@ -38,8 +41,8 @@ module.exports = function(grunt) {
       },
 
       phpunit: {
-        files: 'app/**/*.php',
-        tasks: ['shell:clear', 'shell:runTest']
+        files: ['app/**/*.php', 'app/**/*.xml','test/**/*.php'],
+        tasks: ['shell:clear', 'shell:phpunit', 'shell:phpcs']
       },
 
       livereload: {

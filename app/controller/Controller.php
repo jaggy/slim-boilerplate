@@ -1,15 +1,12 @@
 <?php
-
-namespace Controller;
-
-use Slim\Slim;
+namespace controller;
 
 /**
  *
- * @package    Controller
+ * @package    controller
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.1.4
+ * @version    Release: 0.1.5
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -24,33 +21,61 @@ class Controller
     protected $slim;
 
     /**
+     * Dependency Injection container
+     *
+     * @var    Pimple\Container
+     * @access protected
+     */
+    protected $container;
+
+    /**
+     * Session
+     *
+     * @var    blueprint\SessionAdapter
+     * @access protected
+     */
+    protected $session;
+
+    /**
      * View to render
      *
-     * @access protected
      * @var    string
+     * @access protected
      */
     protected $render;
 
     /**
      * Application name
      *
-     * @access protected
      * @var    string
+     * @access protected
      */
     protected $name;
 
-
-    /* public __construct(Slim $slim) {{{ */
     /**
-     * Initialize the controller
+     * view variables
      *
-     * @param Slim $slim
+     * @var    array
+     * @access protected
+     */
+    protected $variables = [];
+
+
+    /* public __construct(\Slim\Slim $slim, \Pimple\Container $container, \blueprint\SessionAdapter $session) {{{ */
+    /**
+     * __construct
+     *
+     * @param  Slim\Slim                 $slim
+     * @param  Pimple\Container          $container
+     * @param  \blueprint\SessionAdapter $slim
      * @access public
      * @return void
      */
-    public function __construct(Slim $slim)
+    public function __construct(\Slim\Slim $slim, \Pimple\Container $container, \blueprint\SessionAdapter $session)
     {
-        $this->slim = $slim;
+        $this->slim      = $slim;
+        $this->container = $container;
+        $this->session   = $session;
 
         $namespace  = explode('\\', get_called_class());
         $class      = end($namespace);
@@ -59,16 +84,31 @@ class Controller
     /* }}} */
 
 
-    /* public __call($name, $arguments = []) {{{ */
+    /* public set(array $array) {{{ */
     /**
-     * Detect and render the view
+     * set
      *
-     * @param mixed $name
-     * @param mixed $arguments
+     * @param mixed $array
      * @access public
      * @return void
      */
-    public function __call($name, $arguments = [])
+    public function set(array $array)
+    {
+        $this->variables = $array;
+    }
+    /* }}} */
+
+
+    /* public __call($name, array $arguments = []) {{{ */
+    /**
+     * __call
+     *
+     * @param  string $name
+     * @param  array  $arguments
+     * @access public
+     * @return void
+     */
+    public function __call($name, array $arguments = [])
     {
 
         if (!method_exists($this, $name)) {
@@ -79,7 +119,9 @@ class Controller
 
         if (!$this->render) {
             $view = strtolower($this->name) . DS . $name . '.twig';
-            $this->slim->render($view);
+            $this->slim->render($view, $this->variables);
+
+            $this->variables = [];
         }
     }
     /* }}} */

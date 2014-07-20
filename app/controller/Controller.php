@@ -118,7 +118,7 @@ class Controller
         call_user_func_array([$this, $name], $arguments);
 
         if (!$this->render) {
-            $view = strtolower($this->name) . DS . $name . '.twig';
+            $view = strtolower($this->name) . "/{$name}.twig";
             $this->slim->render($view, $this->variables);
 
             $this->variables = [];

@@ -12,12 +12,12 @@ $view = $app->view;
 /**
  * Set the template location
  */
-$view->setTemplatesDirectory(APP_ROOT . DS . 'app' . DS . 'views');
+$view->setTemplatesDirectory(APP_ROOT . '/app/views');
 
 
 $view->parserOptions = [
     'debug' => true,
-    'cache' => APP_ROOT . DS . 'tmp' . DS . 'twig'
+    'cache' => APP_ROOT . '/tmp/twig'
 ];
 
 return $app;

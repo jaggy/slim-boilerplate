@@ -1,3 +1,7 @@
+# 0.2.1
+- Fix DS definition
+- Fix SessionAdapter naming
+
 # 0.2.0
 - Add Pimple Dependency Injection Container
 - Add a Session Adapter

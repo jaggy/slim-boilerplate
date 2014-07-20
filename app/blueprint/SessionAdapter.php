@@ -10,7 +10,7 @@ namespace blueprint;
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.2.0
  */
-interface SessionHandler
+interface SessionAdapter
 {
 
 

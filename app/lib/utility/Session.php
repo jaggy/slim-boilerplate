@@ -10,7 +10,7 @@ namespace lib\utility;
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.2.0
  */
-class Session implements blueprint\SessionAdapter
+class Session implements \blueprint\SessionAdapter
 {
 
 

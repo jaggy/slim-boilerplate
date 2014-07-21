@@ -17,6 +17,7 @@ module.exports = function(grunt) {
 
     stylus: {
       options: {
+        compress: false,
         use: [
           function() {
             return require('autoprefixer-stylus')('last 10 versions', 'ie 8', 'ie 9');

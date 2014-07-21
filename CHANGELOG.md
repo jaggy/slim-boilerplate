@@ -1,3 +1,8 @@
+# 0.2.2
+- Fix controller rendering for JSON
+- Fix PHPUnit bootstrap
+- Do not compress styles by default
+
 # 0.2.1
 - Fix DS definition
 - Fix SessionAdapter naming

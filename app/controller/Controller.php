@@ -6,7 +6,7 @@ namespace controller;
  * @package    controller
  * @author     Jaggy Gauran <jaggygauran@gmail.com>
  * @license    http://www.wtfpl.net/ Do What the Fuck You Want to Public License
- * @version    Release: 0.2.0
+ * @version    Release: 0.2.2
  * @link       http://github.com/jaggyspaghetti/slim-boilerplate
  * @since      Class available since Release 0.1.0
  */
@@ -39,10 +39,10 @@ class Controller
     /**
      * View to render
      *
-     * @var    string
+     * @var    boolean
      * @access protected
      */
-    protected $render;
+    protected $render = false;
 
     /**
      * Application name
@@ -99,6 +99,36 @@ class Controller
     /* }}} */
 
 
+    /* public render($view = null) {{{ */
+    /**
+     * Render
+     *
+     * @param  string|array $view
+     * @access public
+     * @return void
+     */
+    public function render($view = null)
+    {
+
+        $this->render = true;
+
+        if (is_array($view)) {
+            //header('Content-type: application/json');
+
+            $this->slim->response->headers->set('Content-type', 'application/json');
+            echo json_encode($view);
+            return;
+        }
+
+
+        $view = strtolower($this->name) . "/{$view}.twig";
+        $this->slim->render($view, $this->variables);
+
+        $this->variables = [];
+    }
+    /* }}} */
+
+
     /* public __call($name, array $arguments = []) {{{ */
     /**
      * __call
@@ -116,12 +146,8 @@ class Controller
         }
 
         call_user_func_array([$this, $name], $arguments);
-
         if (!$this->render) {
-            $view = strtolower($this->name) . "/{$name}.twig";
-            $this->slim->render($view, $this->variables);
-
-            $this->variables = [];
+            $this->render($name);
         }
     }
     /* }}} */

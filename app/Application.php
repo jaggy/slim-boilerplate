@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Closure;
 use Slim\App as Slim;
 use Dotenv\Dotenv;
 
@@ -32,8 +33,35 @@ class Application
         $this->loadEnvironmentVariables($basepath);
 
         $this->router = $this->newRouter();
+    }
 
-        $this->registerServiceProviders();
+    /**
+     * Bind the abstract to a concrete implementation.
+     *
+     * @param  string  $abstract
+     * @param  Closure  $concrete
+     * @return void
+     */
+    public function bind($abstract, Closure $concrete)
+    {
+        $container = $this->router->getContainer();
+
+        $container[$abstract] = $concrete;
+    }
+
+    /**
+     * Register the service providers.
+     *
+     * @return void
+     */
+    public function registerServiceProviders()
+    {
+        $container = $this->router->getContainer();
+        $providers = config('app.providers');
+
+        array_walk($providers, function ($provider) use ($container) {
+            $container->register(new $provider);
+        });
     }
 
     /**
@@ -90,21 +118,6 @@ class Application
     private function loadEnvironmentVariables($path)
     {
         (new Dotenv($path))->load();
-    }
-
-    /**
-     * Register the service providers.
-     *
-     * @return void
-     */
-    private function registerServiceProviders()
-    {
-        $container = $this->router->getContainer();
-        $providers = config('app.providers');
-
-        array_walk($providers, function ($provider) use ($container) {
-            $container->register(new $provider);
-        });
     }
 
     /**

@@ -18,7 +18,7 @@ class TwigServiceProvider implements ServiceProvider
      */
     public function register(Container $container)
     {
-        $container['view'] = function ($container) {
+        app()->bind('view', function ($container) {
             $view = $this->newTwigEngine(config('view.path'), config('view.twig'));
 
             $view->addExtension(new Twig_Extension_Debug);
@@ -28,7 +28,7 @@ class TwigServiceProvider implements ServiceProvider
             ));
 
             return $view;
-        };
+        });
     }
 
     /**

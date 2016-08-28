@@ -18,18 +18,19 @@ class MonologServiceProvider implements ServiceProvider
      */
     public function register(Container $container)
     {
-        $container['logger'] = function ($container) {
+        app()->bind('logger', function ($container) {
             $stream = new StreamHandler(
                 config('logger.path'),
                 config('logger.level')
             );
 
             $logger = $this->newLogger();
+
             $logger->pushProcessor(new UidProcessor);
             $logger->pushHandler($stream);
 
             return $logger;
-        };
+        });
     }
 
     /**

@@ -93,3 +93,36 @@ if (! function_exists('db')) {
         return $database;
     }
 }
+
+if (! function_exists('env')) {
+    /**
+     * Fetch environment variables.
+     *
+     * @param  string  $key
+     * @param  string  $default
+     * @return mixed
+     */
+    function env($key, $default = null)
+    {
+        $env = getenv($key);
+
+        if (! $env) {
+            return $default;
+        }
+
+        return $env;
+    }
+}
+
+if (! function_exists('bcrypt')) {
+    /**
+     * Bcrypt hasher.
+     *
+     * @param  string  $string
+     * @return string
+     */
+    function bcrypt($string)
+    {
+        return password_hash($string, PASSWORD_BCRYPT);
+    }
+}

@@ -74,3 +74,15 @@ if (! function_exists('config')) {
         return $pointer;
     }
 }
+
+if (! function_exists('db')) {
+    /**
+     * Fetch the database helper.
+     *
+     * @return \Illuminate\Database\Capsule\Manager
+     */
+    function db()
+    {
+        return app('database');
+    }
+}

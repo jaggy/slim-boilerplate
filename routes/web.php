@@ -2,4 +2,4 @@
 
 use App\Http\Controllers\HomeController;
 
-$app->get('/', HomeController::class);
+$router->get('/', HomeController::class);

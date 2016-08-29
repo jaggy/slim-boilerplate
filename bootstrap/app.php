@@ -12,8 +12,5 @@ $app->registerServiceProviders();
 // Register the middleware
 require __DIR__ . '/middleware.php';
 
-// Register the routes
-require __DIR__ . '/../app/Http/routes.php';
-
 return $app;
 

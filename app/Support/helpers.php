@@ -79,10 +79,17 @@ if (! function_exists('db')) {
     /**
      * Fetch the database helper.
      *
+     * @param  string  $table
      * @return \Illuminate\Database\Capsule\Manager
      */
-    function db()
+    function db($table = null)
     {
-        return app('database');
+        $database = app('database');
+
+        if ($table) {
+            return $database->table($table);
+        }
+
+        return $database;
     }
 }

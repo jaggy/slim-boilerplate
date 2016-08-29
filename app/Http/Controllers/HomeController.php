@@ -17,6 +17,8 @@ class HomeController
      */
     public function __invoke(Request $request)
     {
+        // db('users')->get();
+
         return view('home');
     }
 }

@@ -18,7 +18,7 @@ class DatabaseServiceProvider implements ServiceProvider
     {
         app()->bind('database', function ($container) {
             $capsule = new Capsule;
-            $capsule->addConnection(config('db'));
+            $capsule->addConnection(config('database'));
 
             $capsule->setAsGlobal();
             $capsule->bootEloquent();

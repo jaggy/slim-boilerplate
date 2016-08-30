@@ -1,34 +1,21 @@
 <?php
+
 session_start();
 
-require_once dirname(__DIR__) . '/app/config/bootstrap.php';
+if (PHP_SAPI == 'cli-server') {
+    // To help the built-in PHP dev server, check if the request was actually for
+    // something which should probably be served as a static file
+    $url  = parse_url($_SERVER['REQUEST_URI']);
+    $file = __DIR__ . $url['path'];
 
-$slim      = require APP_ROOT . '/app/config/slim.php';
-$container = require APP_ROOT . '/app/config/dependencies.php';
-$session   = new lib\utility\Session;
+    if (is_file($file)) {
+        return false;
+    }
+}
 
+require __DIR__ . '/../vendor/autoload.php';
 
-/*
-|--------------------------------------------------------------------------
-| Routing Setup
-|--------------------------------------------------------------------------
-*/
-$router = new router\Router($slim);
-$router->setContainer($container);
-$router->setSession($session);
+$app = require __DIR__ . '/../bootstrap/app.php';
 
-
-/*
-|--------------------------------------------------------------------------
-| ROUTES
-|--------------------------------------------------------------------------
-*/
-$router->get('/', 'Site@home');
-
-
-/*
-|--------------------------------------------------------------------------
-| Application
-|--------------------------------------------------------------------------
-*/
-$slim->run(); // run the application
+// Run app
+$app->run();
